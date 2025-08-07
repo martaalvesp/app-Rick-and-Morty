@@ -1,13 +1,19 @@
-import 'package:app_rick_and_morty/models/personagens_list.dart';
 import 'package:dio/dio.dart';
+import 'package:app_rick_and_morty/models/personagens_list.dart';
 
-class PersonagensRepository {
+abstract class PersonagensRepository {
   static final dio = Dio(
     BaseOptions(baseUrl: 'https://rickandmortyapi.com/api'),
   );
 
-  // static Future<PersonagensListModel> getUpcomingMovies() async {
-  //   final reponse = await dio.get('/movie/upcoming');
-  //   return MovieListModel.fromMap(reponse.data);
-  // } //esse é do exemplo, preciso mudar para o meu
+  // Chamada de API para obter a lista de personagens
+  static Future<PersonagensListModel> getUpcomingPersonagens() async {
+    final reponse = await dio.get('/character');
+    return PersonagensListModel.fromMap(reponse.data);
+  } 
+
+    static Future<PersonagensListModel> getUpcomingDetalhesPersonagens(int characterId) async {
+    final reponse = await dio.get('/character/$characterId');
+    return PersonagensListModel.fromMap(reponse.data);
+  } 
 }

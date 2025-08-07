@@ -16,30 +16,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Rick & Morty App',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case HomePage.routeId:
+            return MaterialPageRoute(
+              settings: settings,
+              builder: (context) => const HomePage(),
+            );
+        }
+      },
+
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold //estrutura de contrução, fundamental na maioria das telas
-    (
-      body: Placeholder(),
-      bottomNavigationBar: Container(color: Colors.amber, height: 100),
     );
   }
 }
