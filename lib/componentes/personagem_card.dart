@@ -24,9 +24,16 @@ class PersonagemCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network(personagem.image),
+            AspectRatio(
+              aspectRatio: 16 / 7,
+              child: Image.network(
+                personagem.image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
