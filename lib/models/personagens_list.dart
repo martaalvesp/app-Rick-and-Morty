@@ -1,68 +1,83 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
-class PersonagensListModel {
+class PersonagemListModel {
   final Info info;
   final List<Result> results;
-  PersonagensListModel({required this.info, required this.results});
 
-  PersonagensListModel copyWith({Info? info, List<Result>? results}) {
-    return PersonagensListModel(
+  PersonagemListModel({
+    required this.info,
+    required this.results,
+  });
+
+  PersonagemListModel copyWith({
+    Info? info,
+    List<Result>? results,
+  }) {
+    return PersonagemListModel(
       info: info ?? this.info,
       results: results ?? this.results,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'info': info.toMap(),
       'results': results.map((x) => x.toMap()).toList(),
     };
   }
 
-  factory PersonagensListModel.fromMap(Map<String, dynamic> map) {
-    return PersonagensListModel(
-      info: Info.fromMap(map['info'] as Map<String, dynamic>),
+  factory PersonagemListModel.fromMap(Map<String, dynamic> map) {
+    return PersonagemListModel(
+      info: Info.fromMap(map['info']),
       results: List<Result>.from(
-        (map['results'] as List<int>).map<Result>(
-          (x) => Result.fromMap(x as Map<String, dynamic>),
-        ),
+        (map['results'] as List).map((x) => Result.fromMap(x)),
       ),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PersonagensListModel.fromJson(String source) =>
-      PersonagensListModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PersonagemListModel.fromJson(String source) =>
+      PersonagemListModel.fromMap(json.decode(source));
 
   @override
-  String toString() => 'PersonagensListModel(info: $info, results: $results)';
+  String toString() =>
+      'PersonagemListModel(info: $info, results: $results)';
 
   @override
-  bool operator ==(covariant PersonagensListModel other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
 
-    return other.info == info && listEquals(other.results, results);
+    return other is PersonagemListModel &&
+        other.info == info &&
+        listEquals(other.results, results);
   }
 
   @override
   int get hashCode => info.hashCode ^ results.hashCode;
 }
 
+
 class Info {
   final int count;
   final int pages;
-  final String next;
-  final Prev prev;
+  final String? next;
+  final String? prev;
+
   Info({
     required this.count,
     required this.pages,
-    required this.next,
-    required this.prev,
+    this.next,
+    this.prev,
   });
 
-  Info copyWith({int? count, int? pages, String? next, Prev? prev}) {
+  Info copyWith({
+    int? count,
+    int? pages,
+    String? next,
+    String? prev,
+  }) {
     return Info(
       count: count ?? this.count,
       pages: pages ?? this.pages,
@@ -72,27 +87,26 @@ class Info {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'count': count,
       'pages': pages,
       'next': next,
-      'prev': prev.toMap(),
+      'prev': prev,
     };
   }
 
   factory Info.fromMap(Map<String, dynamic> map) {
     return Info(
-      count: map['count'].toInt() as int,
-      pages: map['pages'].toInt() as int,
-      next: map['next'] as String,
-      prev: Prev.fromMap(map['prev'] as Map<String, dynamic>),
+      count: map['count'],
+      pages: map['pages'],
+      next: map['next'],
+      prev: map['prev'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Info.fromJson(String source) =>
-      Info.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Info.fromJson(String source) => Info.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -100,25 +114,19 @@ class Info {
   }
 
   @override
-  bool operator ==(covariant Info other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.count == count &&
+    return other is Info &&
+        other.count == count &&
         other.pages == pages &&
         other.next == next &&
         other.prev == prev;
   }
 
   @override
-  int get hashCode {
-    return count.hashCode ^ pages.hashCode ^ next.hashCode ^ prev.hashCode;
-  }
-}
-
-class Prev {
-  static fromMap(Map<String, dynamic> map) {}
-
-  toMap() {}
+  int get hashCode =>
+      count.hashCode ^ pages.hashCode ^ next.hashCode ^ prev.hashCode;
 }
 
 class Result {
@@ -134,6 +142,7 @@ class Result {
   final List<String> episode;
   final String url;
   final String created;
+
   Result({
     required this.id,
     required this.name,
@@ -180,7 +189,7 @@ class Result {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'id': id,
       'name': name,
       'status': status,
@@ -198,25 +207,25 @@ class Result {
 
   factory Result.fromMap(Map<String, dynamic> map) {
     return Result(
-      id: map['id'].toInt(),
-      name: map['name'] as String,
-      status: map['status'] as String,
-      species: map['species'] as String,
-      type: map['type'] as String,
-      gender: map['gender'] as String,
-      origin: Origin.fromMap(map['origin'] as Map<String, dynamic>),
-      location: Location.fromMap(map['location'] as Map<String, dynamic>),
-      image: map['image'] as String,
+      id: map['id'],
+      name: map['name'],
+      status: map['status'],
+      species: map['species'],
+      type: map['type'],
+      gender: map['gender'],
+      origin: Origin.fromMap(map['origin']),
+      location: Location.fromMap(map['location']),
+      image: map['image'],
       episode: List<String>.from(map['episode']),
-      url: map['url'] as String,
-      created: map['created'] as String,
+      url: map['url'],
+      created: map['created'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Result.fromJson(String source) =>
-      Result.fromMap(json.decode(source) as Map<String, dynamic>);
+      Result.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -224,11 +233,11 @@ class Result {
   }
 
   @override
-  bool operator ==(covariant Result other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
 
-    return other.id == id &&
+    return other is Result &&
+        other.id == id &&
         other.name == name &&
         other.status == status &&
         other.species == species &&
@@ -259,42 +268,52 @@ class Result {
   }
 }
 
-class DeepCollectionEquality {
-  const DeepCollectionEquality();
-
-  get equals => null;
-}
-
 class Origin {
   final String name;
   final String url;
-  Origin({required this.name, required this.url});
 
-  Origin copyWith({String? name, String? url}) {
-    return Origin(name: name ?? this.name, url: url ?? this.url);
+  Origin({
+    required this.name,
+    required this.url,
+  });
+
+  Origin copyWith({
+    String? name,
+    String? url,
+  }) {
+    return Origin(
+      name: name ?? this.name,
+      url: url ?? this.url,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'name': name, 'url': url};
+    return {
+      'name': name,
+      'url': url,
+    };
   }
 
   factory Origin.fromMap(Map<String, dynamic> map) {
-    return Origin(name: map['name'] as String, url: map['url'] as String);
+    return Origin(
+      name: map['name'],
+      url: map['url'],
+    );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Origin.fromJson(String source) =>
-      Origin.fromMap(json.decode(source) as Map<String, dynamic>);
+      Origin.fromMap(json.decode(source));
 
   @override
   String toString() => 'Origin(name: $name, url: $url)';
 
   @override
-  bool operator ==(covariant Origin other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.name == name && other.url == url;
+    return other is Origin && other.name == name && other.url == url;
   }
 
   @override
@@ -304,33 +323,49 @@ class Origin {
 class Location {
   final String name;
   final String url;
-  Location({required this.name, required this.url});
 
-  Location copyWith({String? name, String? url}) {
-    return Location(name: name ?? this.name, url: url ?? this.url);
+  Location({
+    required this.name,
+    required this.url,
+  });
+
+  Location copyWith({
+    String? name,
+    String? url,
+  }) {
+    return Location(
+      name: name ?? this.name,
+      url: url ?? this.url,
+    );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'name': name, 'url': url};
+    return {
+      'name': name,
+      'url': url,
+    };
   }
 
   factory Location.fromMap(Map<String, dynamic> map) {
-    return Location(name: map['name'] as String, url: map['url'] as String);
+    return Location(
+      name: map['name'],
+      url: map['url'],
+    );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Location.fromJson(String source) =>
-      Location.fromMap(json.decode(source) as Map<String, dynamic>);
+      Location.fromMap(json.decode(source));
 
   @override
   String toString() => 'Location(name: $name, url: $url)';
 
   @override
-  bool operator ==(covariant Location other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.name == name && other.url == url;
+    return other is Location && other.name == name && other.url == url;
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:app_rick_and_morty/models/details_personagens.dart';
 import 'package:dio/dio.dart';
 import 'package:app_rick_and_morty/models/personagens_list.dart';
 
@@ -7,13 +8,13 @@ abstract class PersonagensRepository {
   );
 
   // Chamada de API para obter a lista de personagens
-  static Future<PersonagensListModel> getUpcomingPersonagens() async {
+  static Future<PersonagemListModel> getUpcomingPersonagens() async {
     final reponse = await dio.get('/character');
-    return PersonagensListModel.fromMap(reponse.data);
+    return PersonagemListModel.fromMap(reponse.data);
   } 
 
-    static Future<PersonagensListModel> getUpcomingDetalhesPersonagens(int characterId) async {
+    static Future<DetailsPersonagensModel> getDetalhesPersonagens(int characterId) async {
     final reponse = await dio.get('/character/$characterId');
-    return PersonagensListModel.fromMap(reponse.data);
+    return DetailsPersonagensModel.fromMap(reponse.data);
   } 
 }
