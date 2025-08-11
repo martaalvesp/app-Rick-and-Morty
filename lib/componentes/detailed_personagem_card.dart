@@ -1,7 +1,112 @@
-import 'package:app_rick_and_morty/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:app_rick_and_morty/models/details_personagens.dart';
+import 'package:app_rick_and_morty/theme/app_colors.dart';
 
+class DetailedPersonagemCard extends StatelessWidget {
+  final DetailsPersonagensModel detailsPersonagensModel;
+
+  const DetailedPersonagemCard({
+    super.key,
+    required this.detailsPersonagensModel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: AppColors.primaryColorLight,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Image.network(
+              detailsPersonagensModel.image,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  detailsPersonagensModel.name.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.white,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "Status: ${detailsPersonagensModel.status}",
+                  style: TextStyle(color: AppColors.white),
+                ),
+                Text(
+                  "Espécie: ${detailsPersonagensModel.species}",
+                  style: TextStyle(color: AppColors.white),
+                ),
+                if (detailsPersonagensModel.type.isNotEmpty)
+                  Text(
+                    "Tipo: ${detailsPersonagensModel.type}",
+                    style: TextStyle(color: AppColors.white),
+                  ),
+                Text(
+                  "Origem: ${detailsPersonagensModel.origin.name}",
+                  style: TextStyle(color: AppColors.white),
+                ),
+                Text(
+                  "Localização: ${detailsPersonagensModel.location.name}",
+                  style: TextStyle(color: AppColors.white),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "Episódios em que aparece:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: AppColors.white,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: detailsPersonagensModel.episode
+                      .map(
+                        (ep) => Chip(
+                          backgroundColor: AppColors.primaryColorLight,
+                          labelStyle: TextStyle(color: AppColors.white),
+                          side: BorderSide(color: AppColors.white),
+                          label: Text(ep),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 class DetailedPersonagemCard extends StatelessWidget {
   const DetailedPersonagemCard({
     required this.detailsPersonagensModel,
@@ -300,4 +405,4 @@ class DetailedPersonagemCard extends StatelessWidget {
 
 //           ),
 //         );
-// }
+// }*/

@@ -13,7 +13,7 @@ abstract class PersonagensRepository {
     return PersonagemListModel.fromMap(reponse.data);
   } 
 
-    static Future<DetailsPersonagensModel> getDetalhesPersonagens(int characterId) async {
+    static Future<DetailsPersonagensModel> getDetalhesPersonagens(characterId) async {
     final reponse = await dio.get('/character/$characterId');
     return DetailsPersonagensModel.fromMap(reponse.data);
   } 

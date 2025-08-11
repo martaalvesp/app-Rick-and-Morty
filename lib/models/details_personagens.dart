@@ -1,6 +1,4 @@
-
 import 'dart:convert';
-
 // import 'package:app_rick_and_morty/models/personagens_list.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/src/material/chip.dart';
@@ -94,7 +92,10 @@ class DetailsPersonagensModel {
       origin: Origin.fromMap(map['origin'] as Map<String, dynamic>),
       location: Location.fromMap(map['location'] as Map<String, dynamic>),
       image: map['image'] as String,
-      episode: List<String>.from((map['episode'] as List<String>)),
+      episode: map['episode'] != null
+          ? List<String>.from((map['episode'] as List).map((e) => e.toString()))
+          : <String>[],
+      //List<String>.from((map['episode'] as List<String>)),
       url: map['url'] as String,
       created: map['created'] as String,
     );
