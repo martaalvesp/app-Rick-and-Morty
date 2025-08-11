@@ -31,12 +31,15 @@ class HomePageState extends State<HomePage> {
       body: FutureBuilder(
         future: personagensList,
         builder: (context, snapshot) {
-          // if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return const Center(child: CircularProgressIndicator());
-          // } else if (snapshot.hasError) {
-          //   return Center(child: Text('Error: ${snapshot.error}'));
-          // } else {
-          //if (snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError) {
+            return Text('Erro: ${snapshot.error}');
+          }
+          if (!snapshot.hasData || snapshot.data == null) {
+            return Text('Nenhum dado encontrado');
+          }
           final dataResults = snapshot.data!.results;
 
           return ListView.builder(
