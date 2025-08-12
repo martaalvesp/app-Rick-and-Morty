@@ -38,7 +38,6 @@ class _DetailsPageState extends State<DetailsPage> {
         throw Exception('Nenhum episódio encontrado');
       }
 
-      // Extrai o ID da URL (ex: "https://rickandmortyapi.com/api/episode/28" => "28")
       final uri = Uri.parse(firstEpisodeUrl);
       final episodeId = uri.pathSegments.last;
 
@@ -61,15 +60,15 @@ class _DetailsPageState extends State<DetailsPage> {
             return Center(
               child: Text(
                 'Erro: ${snapshotChar.error}',
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.white),
               ),
             );
           }
           if (!snapshotChar.hasData) {
-            return const Center(
+            return Center(
               child: Text(
                 'Nenhum dado encontrado',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.white),
               ),
             );
           }
@@ -86,7 +85,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 return Center(
                   child: Text(
                     'Erro ao carregar episódio: ${snapshotEp.error}',
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.white),
                   ),
                 );
               }

@@ -21,7 +21,7 @@ class DetailedPersonagemCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: SizedBox(
-          width: 378, // largura fixa para o Card
+          width: 378,//tamanho indicado no figma
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,23 +34,22 @@ class DetailedPersonagemCard extends StatelessWidget {
                 ),
               ),
 
-              // Informações
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Text(
                       detailsPersonagensModel.name.toUpperCase(),
                       style: TextStyle(
                         fontSize: 14.5,
+                        fontFamily: 'Lato ',
                         fontWeight: FontWeight.w900,
                         color: AppColors.white,
                       ),
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 35),
                     Row(
                       children: [
                         Container(
@@ -71,53 +70,55 @@ class DetailedPersonagemCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          "${detailsPersonagensModel.status} - ${detailsPersonagensModel.species}",
+                          "${detailsPersonagensModel.status} - ${detailsPersonagensModel.species} -  ${detailsPersonagensModel.gender}",
                           style: TextStyle(
+                            fontFamily: 'Lato ',
+                            fontSize: 12.5,
+
                             color: AppColors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
+                    const SizedBox(height: 8),
 
-                    // Tipo
-                    if (detailsPersonagensModel.type.isNotEmpty)
-                      Text(
-                        "Tipo: ${detailsPersonagensModel.type}",
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 12.5,
-                        ),
-                      ),
-
-                    const SizedBox(height: 12),
-
-                    // Última localização
                     Text(
                       "Last know location:",
-                      style: TextStyle(color: AppColors.white, fontSize: 12.5),
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: 'Lato ',
+                      ),
                     ),
                     Text(
                       "${detailsPersonagensModel.origin.name} (${detailsPersonagensModel.location.name})",
                       style: TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.bold,
                         fontSize: 12.5,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Lato ',
+                        color: AppColors.white,
                       ),
                     ),
 
                     const SizedBox(height: 16),
 
-                    // Primeiro episódio
                     Text(
                       "First seen in:",
-                      style: TextStyle(fontSize: 12.5, color: AppColors.white),
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: 'Lato ',
+                        color: AppColors.white,
+                      ),
                     ),
                     Text(
                       detailsEpisodeModel.name,
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
                         fontSize: 12.5,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Lato ',
                         color: AppColors.white,
                       ),
                     ),

@@ -23,7 +23,7 @@ class PersonagemCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: SizedBox(
-          width: 378,
+          width: 378,//tamanhos indicados do figma
           height: 160,
           child: Stack(
             children: [
@@ -38,14 +38,16 @@ class PersonagemCard extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   color: AppColors.primaryColorLight,
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),
                   child: Text(
                     personagem.name.toUpperCase(),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                     style: TextStyle(
+                      fontFamily: 'Lato',
                       fontSize: 14.5,
                       fontWeight: FontWeight.w900,
                       color: AppColors.white,
+                    
                     ),
                   ),
                 ),

@@ -1,7 +1,6 @@
 import 'dart:convert';
 // import 'package:app_rick_and_morty/models/personagens_list.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/src/material/chip.dart';
 
 class DetailsPersonagensModel {
   final int id;
@@ -95,13 +94,11 @@ class DetailsPersonagensModel {
       episode: map['episode'] != null
           ? List<String>.from((map['episode'] as List).map((e) => e.toString()))
           : <String>[],
-      //List<String>.from((map['episode'] as List<String>)),
       url: map['url'] as String,
       created: map['created'] as String,
     );
   }
 
-  // url: '', created: ''
 
   String toJson() => json.encode(toMap());
 
@@ -188,7 +185,6 @@ class Origin {
   @override
   int get hashCode => name.hashCode ^ url.hashCode;
 
-  map(Chip Function(dynamic origin) param0) {}
 }
 
 class Location {

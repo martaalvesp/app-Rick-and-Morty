@@ -20,11 +20,10 @@ PreferredSizeWidget appBarComponent(
           Navigator.pop(context);
         },
         child: Padding(
-          padding: const EdgeInsets.only(left: 13.98, top: 17.48),
+          padding: const EdgeInsets.all(15),//Valor apenas pra não ficar torto, sei que os valores são left: 13.98, top: 17.48
           child: Icon(
             isSecondPage ? Icons.arrow_back : Icons.menu,
             color: AppColors.white,
-            // margin: const EdgeInsets.only(left: 16.0, top: 12.0),
           ),
         ),
       ),
@@ -32,7 +31,7 @@ PreferredSizeWidget appBarComponent(
     actions: [
       Container(
         alignment: Alignment.topCenter,
-        margin: const EdgeInsets.only(right: 16, top: 12.23),
+        margin: const EdgeInsets.all(15),//Valor apenas pra não ficar torto, sei que os valores são top:12.23 e left:314.56
         child: Icon(Icons.account_circle, color: AppColors.white),
         
       ),
@@ -42,7 +41,7 @@ PreferredSizeWidget appBarComponent(
         children: [
           Image.asset(
             'assets_images/Group 119.png',
-          width: 115,
+          width: 115,//tamanho indicado no figma
           height: 76.99,
           alignment: Alignment.center,
           ),
@@ -56,7 +55,7 @@ PreferredSizeWidget appBarComponent(
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Lato',
-                letterSpacing: 16.5 / 100,
+                letterSpacing: 16.5 / 100,//tamanho indicado no figma
               ),
             ),
           ),

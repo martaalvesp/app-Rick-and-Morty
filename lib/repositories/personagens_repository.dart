@@ -8,7 +8,6 @@ abstract class PersonagensRepository {
     BaseOptions(baseUrl: 'https://rickandmortyapi.com/api'),
   );
 
-  // Chamada de API para obter a lista de personagens
   static Future<PersonagemListModel> getUpcomingPersonagens() async {
     final reponse = await dio.get('/character');
     return PersonagemListModel.fromMap(reponse.data);
