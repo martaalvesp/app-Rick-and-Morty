@@ -15,7 +15,6 @@ class PersonagemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.primaryColorLight,
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 20.0),
       shape: const RoundedRectangleBorder(
@@ -23,33 +22,36 @@ class PersonagemCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AspectRatio(
-              aspectRatio: 16 / 7,
-              child: Image.network(
-                personagem.image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 12.0,
-              ),
-              child: Text(
-                personagem.name.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 14.5,
-                  fontWeight: FontWeight.w900,
-                  color: AppColors.white,
-                  
+        child: SizedBox(
+          width: 378,
+          height: 160,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.network(
+                  personagem.image,
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  color: AppColors.primaryColorLight,
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    personagem.name.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
