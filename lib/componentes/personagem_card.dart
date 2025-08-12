@@ -24,7 +24,7 @@ class PersonagemCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
               aspectRatio: 16 / 7,
@@ -45,6 +45,7 @@ class PersonagemCard extends StatelessWidget {
                   fontSize: 14.5,
                   fontWeight: FontWeight.w900,
                   color: AppColors.white,
+                  
                 ),
               ),
             ),

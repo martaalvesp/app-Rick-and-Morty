@@ -21,6 +21,7 @@ class HomePageState extends State<HomePage> {
   initState() {
     personagensList = PersonagensRepository.getUpcomingPersonagens();
     super.initState();
+    
   }
 
   @override

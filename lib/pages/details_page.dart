@@ -1,4 +1,5 @@
 import 'package:app_rick_and_morty/componentes/detailed_personagem_card.dart';
+import 'package:app_rick_and_morty/models/details_episode.dart';
 import 'package:app_rick_and_morty/models/details_personagens.dart';
 import 'package:flutter/material.dart';
 import 'package:app_rick_and_morty/repositories/personagens_repository.dart';
@@ -18,13 +19,31 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   late Future<DetailsPersonagensModel> characterDetails;
+  late Future<DetailsEpisodeModel> episodeDetails;
 
   @override
   void initState() {
     super.initState();
+
     characterDetails = PersonagensRepository.getDetalhesPersonagens(
       widget.characterId,
     );
+
+    episodeDetails = characterDetails.then((character) {
+      final firstEpisodeUrl = character.episode.isNotEmpty
+          ? character.episode.first
+          : '';
+
+      if (firstEpisodeUrl.isEmpty) {
+        throw Exception('Nenhum episódio encontrado');
+      }
+
+      // Extrai o ID da URL (ex: "https://rickandmortyapi.com/api/episode/28" => "28")
+      final uri = Uri.parse(firstEpisodeUrl);
+      final episodeId = uri.pathSegments.last;
+
+      return PersonagensRepository.getDetalhesEpisode(episodeId);
+    });
   }
 
   @override
@@ -34,19 +53,19 @@ class _DetailsPageState extends State<DetailsPage> {
       backgroundColor: AppColors.backgroundColor,
       body: FutureBuilder<DetailsPersonagensModel>(
         future: characterDetails,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+        builder: (context, snapshotChar) {
+          if (snapshotChar.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasError) {
+          if (snapshotChar.hasError) {
             return Center(
               child: Text(
-                'Erro: ${snapshot.error}',
+                'Erro: ${snapshotChar.error}',
                 style: const TextStyle(color: Colors.white),
               ),
             );
           }
-          if (!snapshot.hasData) {
+          if (!snapshotChar.hasData) {
             return const Center(
               child: Text(
                 'Nenhum dado encontrado',
@@ -55,78 +74,36 @@ class _DetailsPageState extends State<DetailsPage> {
             );
           }
 
-          final personagem = snapshot.data!;
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: DetailedPersonagemCard(detailsPersonagensModel: personagem),
+          final personagem = snapshotChar.data!;
+
+          return FutureBuilder<DetailsEpisodeModel>(
+            future: episodeDetails,
+            builder: (context, snapshotEp) {
+              if (snapshotEp.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshotEp.hasError) {
+                return Center(
+                  child: Text(
+                    'Erro ao carregar episódio: ${snapshotEp.error}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                );
+              }
+
+              final episode = snapshotEp.data!;
+
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: DetailedPersonagemCard(
+                  detailsPersonagensModel: personagem,
+                  detailsEpisodeModel: episode,
+                ),
+              );
+            },
           );
         },
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-class DetailsPage extends StatefulWidget {
-  static const routeId = '/details';
-  const DetailsPage({super.key, required this.characterId});
-
-  final int characterId;
-
-  @override
-  DetailsPageState createState() => DetailsPageState();
-}
-
-class DetailsPageState extends State<DetailsPage> {
-  Future<DetailsPersonagensModel>? characterDetails;
-
-  @override
-  void initState() {
-    characterDetails = PersonagensRepository.getDetalhesPersonagens(
-      widget.characterId,
-    );
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Character Details')),
-      body: FutureBuilder(
-        future: characterDetails,
-        builder: (context, AsyncSnapshot<DetailsPersonagensModel> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final character = snapshot.data;
-            return ListView(
-              children: [
-                Image.network(character?.image ?? ''),
-                Text('Name: ${character?.name ?? 'Unknown'}'),
-                Text('Status: ${character?.status ?? 'Unknown'}'),
-                Text('Species: ${character?.species ?? 'Unknown'}'),
-              ],
-            );
-          }
-        },
-      ),
-    );
-  }
-}
-*/
